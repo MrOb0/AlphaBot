@@ -1,0 +1,23 @@
+{
+    "name": "pop",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "start": "node index.js",
+        "test": "nodemon index.js"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "@androz2091/discord-invites-tracker": "^1.1.0",
+        "chalk": "^4.1.2",
+        "discord-html-transcripts": "^2.2.8",
+        "discord-logs": "^2.0.1",
+        "discord.js": "^13.2.0",
+        "glob": "^7.1.7",
+        "mongoose": "^6.0.2",
+        "ms": "^2.1.3"
+    }
+}

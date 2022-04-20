@@ -1,0 +1,9 @@
+{
+  "token": "OTUyNzEzMjgzNjgzNjMxMTQ0.Yi6BYw.Qb08AuiDqeuDMybst4GORLSoUVE",
+  "prefix": "!pop",
+  "mongooseConnectionString": "mongodb+srv://alpha:configjson@cluster0.8ftqs.mongodb.net/test",
+  "EVERYONEID": "814490513826512897",
+  "PARENTID": "957339891354710036",
+  "OPENTICKET": "859540107626545203",
+  "TRANSCRIPTSID": "957304736527310848"
+}
