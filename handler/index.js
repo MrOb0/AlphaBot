@@ -109,7 +109,17 @@ module.exports = async (client) => {
        // })
 
         // Register for all the guilds the bot is in
-        await client.application.commands.set(arrayOfSlashCommands);
+        await client.guilds.fetch();
+        client.guilds.cache.forEach((guild) => {
+            // Iterating over every guild and registering the commands.
+            console.log(`[Slash Register]: Registering [${arrayOfSlashCommands.length}] commands for ${guild.name}`)
+            
+            // Looping over each CommandData.
+            for (const data of arrayOfSlashCommands) {
+                client.application.commands.create(data, guild.id);
+                console.log(` | [Mount]: ${data.name}`)
+            }
+        })
     });
 
 

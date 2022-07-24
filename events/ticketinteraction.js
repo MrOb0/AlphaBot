@@ -32,11 +32,15 @@ module.exports = {
         parent: Data.Category,
         permissionOverwrites: [
           {
-            id: member.id,
+            id: member.id, // Ticket creator.
             allow: ["SEND_MESSAGES", "VIEW_CHANNEL", "READ_MESSAGE_HISTORY"]
           },
           {
-            id: Data.EveryoneID,
+            id: Data.Handlers, // Ticket handlers.
+            allow: ["SEND_MESSAGES", "VIEW_CHANNEL", "READ_MESSAGE_HISTORY"]
+          },
+          {
+            id: guild.id, // @everyone
             deny: ["SEND_MESSAGES", "VIEW_CHANNEL", "READ_MESSAGE_HISTORY"],
           },
         ],
@@ -56,7 +60,7 @@ module.exports = {
         const embed = new MessageEmbed()
           .setAuthor({
             name: `${guild.name} | Ticket: ${ID}`,
-            iconURL: `${guild.iconURL({ dynamic: true })}`,
+            iconURL: `${guild.iconURL({ dynamic: true }) || "https://cdn-icons-png.flaticon.com/512/5968/5968898.png"}`,
           })
           .setDescription('Thank you for contacting us, write your problem and a staff member will contact you as soon as possible!')
           .setFooter({ text: "These Buttons Are Staff Only Buttons!" })
