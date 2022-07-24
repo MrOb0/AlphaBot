@@ -35,12 +35,6 @@
                 required: true,
             },
             {
-                name: 'everyone',
-                description: 'Provide The @everyone Role! Do IT!',
-                type: 'ROLE',
-                required: true,
-            },
-            {
                 name: 'description',
                 description: 'Set The Description For The Embed That Will Be Send In The Ticket Hub!',
                 type: 'STRING',
@@ -78,11 +72,12 @@
             const { guild, options } = interaction;
 
             try {
-                const Channel = options.getChannel('channel');
-                const Category = options.getChannel('category');
-                const Transcripts = options.getChannel('transcripts');
-                const Handlers = options.getRole('handlers')
-                const Everyone = options.getRole('everyone')
+                const [Channel, Category, Transcripts, Handlers] = [
+                    options.getChannel('channel'),
+                    options.getChannel('category'),
+                    options.getChannel('transcripts'),
+                    options.getRole('handlers')
+                ]
 
                 const Description = options.getString('description')
                 const Button1 = options.getString('first-button').split(",")
@@ -99,62 +94,52 @@
                     Category: Category.id, 
                     Transcripts: Transcripts.id, 
                     Handlers: Handlers.id,
-                    EveryoneID: Everyone.id,
                     Description: Description,
                     Buttons: [Button1[0], Button2[0], Button3[0]]
-                    
-                    },
-                    {
-                        new: true,
-                        upsert: true,
-                    })
+                },
+                {
+                    new: true,
+                    upsert: true,
+                })
     
-                    const Buttons = new MessageActionRow()
-                    Buttons.addComponents(
-                        new MessageButton ()
-                        .setCustomId(Button1[0])
-                        .setLabel(Button1[0])
-                        .setStyle("SUCCESS")
-                        .setEmoji(Emoji1),
-                        new MessageButton()
-                        .setCustomId(Button2[0])
-                        .setLabel(Button2[0])
-                        .setStyle('SECONDARY')
-                        .setEmoji(Emoji3),
-                        new MessageButton()
-                        .setCustomId(Button3[0])
-                        .setLabel(Button3[0])
-                        .setStyle('PRIMARY')
-                        .setEmoji(Emoji3)
-                    )
+                const Buttons = new MessageActionRow()
+                Buttons.addComponents(
+                    new MessageButton ()
+                    .setCustomId(Button1[0])
+                    .setLabel(Button1[0])
+                    .setStyle("SUCCESS")
+                    .setEmoji(Emoji1),
+                    new MessageButton()
+                    .setCustomId(Button2[0])
+                    .setLabel(Button2[0])
+                    .setStyle('SECONDARY')
+                    .setEmoji(Emoji2),
+                    new MessageButton()
+                    .setCustomId(Button3[0])
+                    .setLabel(Button3[0])
+                    .setStyle('PRIMARY')
+                    .setEmoji(Emoji3)
+                )
 
-                    const embed = new MessageEmbed()
-                    .setAuthor({ name: guild.name + " | Ticketing System", iconURL: guild.iconURL({ dynamic: true })})
-                    .setDescription(Description)
-                    .setColor('#b98ffc')
+                const embed = new MessageEmbed()
+                .setAuthor({ name: guild.name + " | Ticketing System", iconURL: guild.iconURL({ dynamic: true })})
+                .setDescription(Description)
+                .setColor('#b98ffc')
     
-        await guild.channels.cache.get(Channel.id).send({
-            embeds: [embed],
-            components: [Buttons]
-        })
+                await guild.channels.cache.get(Channel.id).send({
+                    embeds: [embed],
+                    components: [Buttons]
+                })
     
-        interaction.followUp('Sent In Ticket Channel')
-
-
-
-
-
-
-
-
+                interaction.followUp('Sent In Ticket Channel')
             } catch (err) {
                 const errEmbed = new MessageEmbed()
-                .setColor('RED')
-                .setDescription(`⛔An Error Occured While Setting Up Your Ticket System\n**What To Make Sure Of>**
-                1. Make Sure None Of You Buttons Are Duplicated.
-                2. Make Sure Your Use This Format For Your Buttons => Name, Emoji.    
-                4. Make Sure Your Button Emoji Are Actually Emojis, Not Ids.
-                `)
+                    .setColor('RED')
+                    .setDescription(`⛔An Error Occured While Setting Up Your Ticket System\n**What To Make Sure Of>**
+                    1. Make Sure None Of You Buttons Are Duplicated.
+                    2. Make Sure Your Use This Format For Your Buttons => Name, Emoji.    
+                    4. Make Sure Your Button Emoji Are Actually Emojis, Not Ids.
+                    `)
                 console.log(err)
 
                 interaction.followUp({ embeds: [errEmbed] })
